@@ -1,0 +1,87 @@
+token =''
+
+import discord
+from discord.ext import commands
+import os
+import random
+import time
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='^', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def intro(ctx):
+    await ctx.send(f"Kenalin, {bot.user}! Aku bot seputar polusi udara, mari bekerjasama!")
+
+@bot.command()
+async def heelp(ctx):
+    await ctx.send("Perintah yang tersedia:\n 1. ^intro\n 2. ^heelp\n 3. ^meme\n 4. ^penyebab_asap\n 5. ^penyebab_sampah\n 6. ^arti\n 7. ^tindakan")
+
+@bot.command()
+async def meme(ctx):
+    list_polusi = os.listdir("polusi")
+    sent_polusi = random.choice (list_polusi)
+    with open(f'polusi/{sent_polusi}', 'rb') as f:
+        picture= discord.File(f)
+        await ctx.send(file=picture)
+
+@bot.command()
+async def penyebab_asap(ctx):
+    await ctx.send("Polusi udara disebabkan oleh beberapa hal,:\n 1. ASAP INDUSTRI")
+    await ctx.send("Ada banyak pemilik industri/pabrik yang membuang asap kotor ke langit.\nHal ini membuat langit menjadi pekat gelap serta sesak nafas.\n Makin banyaknya pabrik dengan sedikit usaha untuk mencari cara yang lain.")
+    with open('decor/asap-pabrik (1).jpg', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(3)
+
+    await ctx.send("2. ASAP TRANSPORTASI")
+    await ctx.send("Bukan hanya asap industri, banyak orang jaman sekarang memiliki kendaraan pribadi.\nHanya untuk pergi ketempat dekat saja harus mengeluarkan kendaraannya.\n Berjalan kaki dilupakan, lama kelamaan tidak digunakan.")
+    with open('decor/mobil (1).jpg', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+    time.sleep(2)
+    await ctx.send("Mari kita belajar dan bekerjasama mencari cara, daripada terjebak dalam polusi tiada guna!\n -Orang sesak napas ")
+
+@bot.command()
+async def penyebab_sampah(ctx):
+    await ctx.send("Banyak sekali orang-orang yang membuang sampah sembarangan. TANPA kita sadari, sampah juga menyebabkan polusi udara.\n Seringnya juga orang membakar sampah lalu membiarkan asap tersebut naik ke langit.")
+    with open('decor/sampahfire.jpg', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(2)
+    await ctx.send("Main tebak-tebakan yuk, apa sesuatu yang bau, kotor, jijik, bertumpukan, berserakan? Hatiku? Salah. Jawabannya sampah.\n -Orang benci sampah")
+
+@bot.command()
+async def arti(ctx):
+    await ctx.send("Polusi adalah pencemaran dan pengotoran lingkungan di sekitar kita. Polusi pun dapat dibagi menjadi dua,\nyaitu polusi udara dan polusi air.")
+    with open('decor/kbbi.png', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(2)
+    await ctx.send("Untuk bot ini, akan berfokus kepada polusi udara. Diatas sebagai bukti:)")
+
+@bot.command()
+async def tindakan(ctx):
+    await ctx.send("AYO KITA TERAPKAN TINDAKAN BERIKUT UNTUK MENGURANGI POLUSI!!!\n Menanam Pohon")
+    with open('decor/tanam.png', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(2)
+    await ctx.send("Hemat Penggunaan Transportasi")
+    with open('decor/kendaraan.jpg', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(2)
+    await ctx.send("Berhenti Membakar Sampah")
+    with open('decor/buang.jpg', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    time.sleep(1)
+    await ctx.send("Ada banyak yang bisa kita lakukan, namun melakukan tiga hal ini saja jarang sekali dipatuhi!\n Mari kita bersama-sama mengurangi polusi udara dengan melakukan hal simpel!")
+bot.run(token)
